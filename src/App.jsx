@@ -26,6 +26,13 @@ export const App = () => {
     )
   }
 
+  /* Function for handling clicks on like button
+   * @param thoughtID: _id of liked thought
+   * 
+   * This functions creates a new thoughts list by iterating through
+   * the old list and updating the 'hearts'-attribute of the thought
+   * which got liked. Then update state thoughts through setThoughts.
+   */
   const handleLikeButtonClick = (thoughtID) => {
     fetch(`https://happy-thoughts-ux7hkzgmwa-uc.a.run.app/thoughts/${thoughtID}/like`, {
       method: 'POST'
@@ -33,6 +40,7 @@ export const App = () => {
       .then((res) => res.json())
       .then((updatedThought) => {
         let updatedThoughtsList = thoughts.map((thought) => {
+          // Iterate old thought-list and update the one which got liked
           if(thought._id === updatedThought._id) {
             return {
               ...thought,
