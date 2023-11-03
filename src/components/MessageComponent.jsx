@@ -9,7 +9,6 @@ export const MessageComponent = ({props}) => {
             <p>{props.message}</p>
             <div className="info-wrapper">
             <div className="like-info">
-            <LikeButton props={props} handleLikeButtonClickFunc={handleLikeButtonClickFunc}/>
             <span className="numberoflikes">x{props.hearts}</span>
             </div>
             <div className="time-info">
