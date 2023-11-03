@@ -20,35 +20,35 @@ export const App = () => {
 
   if (loading) {
     return (
-        <div>Loading...</div>
+        <div className="loading-screen">
+          <p>Loading...</p>
+        </div>
     )
   }
 
-  const handleLikeButtonClick = () => {
-    // do something
-
-  }
+  const handleLikeButtonClick = (thoughtID) => {
+    fetch(`https://happy-thoughts-ux7hkzgmwa-uc.a.run.app/thoughts/${thoughtID}/like`, {
+      method: 'POST'
+    })
+      .then((res) => res.json())
+      .then((updatedThought) => {
+        let updatedThoughtsList = thoughts.map((thought) => {
+          if(thought._id === updatedThought._id) {
+            return {
+              ...thought,
+              hearts: updatedThought.hearts
+            }
+          }
+          return thought;
+        });
+        setThoughts(updatedThoughtsList);
+      });
+  };
 
   const handleFormSubmit = () => {
     // do something
     
   }
-  /*
-  const handleLikeButtonClick = (thoughtID) => {
-    // Send the POST request with the id given by likebutton
-    fetch(`https://happy-thoughts-ux7hkzgmwa-uc.a.run.app/thoughts/${thoughtID}/like`, {
-      method: 'POST',
-      body: JSON.stringify({ message: 'Hello world' })
-    })
-      .then((res) => res.json())
-      .then((updatedThought) => {
-        console.log(updatedThought);
-        //setThoughts((thoughts) => [updatedThought, ...thoughts])
-      })
-  }
-  */
-
-  console.log(thoughts)
 
   return(
     <>
@@ -56,8 +56,9 @@ export const App = () => {
       <TextForm handleFormSubmitFunc={handleFormSubmit} />
       {thoughts.map((thought) => {
         return(
-          <div key={thought.id} className="thought-container">
-            <MessageComponent props={thought} handleLikeButtonClickFunc={handleLikeButtonClick} />
+          <div key={thought._id} className="thought-container">
+            <MessageComponent props={thought} />
+            <LikeButton key={thought._id} props={thought} handleLikeButtonClickFunc={handleLikeButtonClick} />
           </div>
         )})}
     </>
