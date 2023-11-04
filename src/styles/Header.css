@@ -1,0 +1,20 @@
+.header {
+    margin-bottom: 3em;
+}
+
+h1 {
+    background-color: #feb7d2;
+    font-size: 3em;
+    font-weight: bold;
+    font-family: "Times New Roman", Times, serif;
+    filter: drop-shadow(1px 1px 1px red);
+    background: -webkit-radial-gradient(#feb7d2, #ff7171, #feb7d2);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+}
+
+/*
+text-shadow: 1px 1px 2px red, 0 0 1em #feb7d2, 0 0 0.2em #feb7d2;
+*/

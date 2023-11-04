@@ -25,6 +25,7 @@ button {
     border: none;
     border-radius: 50%;
     padding: 15px;
+    cursor: pointer;
 }
 .like-info {
     display: inline-block;

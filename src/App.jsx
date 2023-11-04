@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { HeaderComponent } from "./components/HeaderComponent.jsx";
-import { LikeButton } from "./components/LikeButton.jsx";
 import { MessageComponent } from "./components/MessageComponent.jsx";
 import { TextForm } from "./components/TextForm.jsx";
 
@@ -74,7 +73,6 @@ export const App = () => {
     // After updating a new thought, clear the text-area of the TextForm
     setNewThought("");
   };
-  console.log(thoughts);
 
   return (
     <>
@@ -89,7 +87,7 @@ export const App = () => {
           <div key={thought._id} className="thought-container">
             <MessageComponent
               props={thought}
-              handleLikeButtonClickFunc={handleLikeButtonClick}
+              handleLikeButtonClick={handleLikeButtonClick}
             />
           </div>
         );
