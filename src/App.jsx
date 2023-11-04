@@ -1,64 +1,97 @@
 import React, { useState, useEffect } from "react";
 import { HeaderComponent } from "./components/HeaderComponent.jsx";
-import { LikeButton } from "./components/LikeButton.jsx"
-import { MessageComponent } from "./components/MessageComponent.jsx"
-import { TextForm } from "./components/TextForm.jsx"
+import { MessageComponent } from "./components/MessageComponent.jsx";
+import { TextForm } from "./components/TextForm.jsx";
 
 export const App = () => {
   const [thoughts, setThoughts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [newThought, setNewThought] = useState("");
+  const apiUrl = "https://happy-thoughts-ux7hkzgmwa-uc.a.run.app/thoughts";
 
+  // Fetch initial thoughts through API
+  const fetchThoughts = () => {
+    fetch(apiUrl)
+      .then((res) => res.json())
+      .then((data) => setThoughts(data));
+    setLoading(false);
+  };
   useEffect(() => {
-    // Fetch initial thoughts through API
-    fetch("https://happy-thoughts-ux7hkzgmwa-uc.a.run.app/thoughts")
-      .then(res => res.json())
-      .then(json => {
-        setThoughts(json)
-        setLoading(false);
-      });
+    fetchThoughts();
   }, []);
 
   if (loading) {
     return (
-        <div>Loading...</div>
+        <div className="loading-screen">
+          <p>Loading...</p>
+        </div>
     )
   }
 
-  const handleLikeButtonClick = () => {
-    // do something
-
-  }
-
-  const handleFormSubmit = () => {
-    // do something
-    
-  }
-  /*
+  /* Function for handling clicks on like button
+   * @param thoughtID: _id of liked thought
+   * 
+   * This functions creates a new thoughts list by iterating through
+   * the old list and updating the 'hearts'-attribute of the thought
+   * which got liked. Then update state thoughts through setThoughts.
+   */
   const handleLikeButtonClick = (thoughtID) => {
-    // Send the POST request with the id given by likebutton
     fetch(`https://happy-thoughts-ux7hkzgmwa-uc.a.run.app/thoughts/${thoughtID}/like`, {
-      method: 'POST',
-      body: JSON.stringify({ message: 'Hello world' })
+      method: 'POST'
     })
       .then((res) => res.json())
       .then((updatedThought) => {
-        console.log(updatedThought);
-        //setThoughts((thoughts) => [updatedThought, ...thoughts])
-      })
-  }
-  */
+        let updatedThoughtsList = thoughts.map((thought) => {
+          // Iterate old thought-list and update the one which got liked
+          if(thought._id === updatedThought._id) {
+            return {
+              ...thought,
+              hearts: updatedThought.hearts
+            }
+          }
+          return thought;
+        });
+        setThoughts(updatedThoughtsList);
+      });
+  };
 
-  console.log(thoughts)
+  // Handle form submit
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
 
-  return(
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: newThought }),
+    };
+
+    fetch(apiUrl, options)
+      .then((res) => res.json())
+      .then((updatedThought) => {
+        setThoughts((thought) => [updatedThought, ...thought]);
+      });
+    // After updating a new thought, clear the text-area of the TextForm
+    setNewThought("");
+  };
+
+  return (
     <>
       <HeaderComponent />
-      <TextForm handleFormSubmitFunc={handleFormSubmit} />
+      <TextForm
+        handleFormSubmit={handleFormSubmit}
+        newThought={newThought}
+        setNewThought={setNewThought}
+      />
       {thoughts.map((thought) => {
-        return(
-          <div key={thought.id} className="thought-container">
-            <MessageComponent props={thought} handleLikeButtonClickFunc={handleLikeButtonClick} />
+        return (
+          <div key={thought._id} className="thought-container">
+            <MessageComponent
+              props={thought}
+              handleLikeButtonClick={handleLikeButtonClick}
+            />
           </div>
-        )})}
+        );
+      })}
     </>
-  )};
+  );
+};
