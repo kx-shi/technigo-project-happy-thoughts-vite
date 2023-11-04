@@ -4,9 +4,9 @@ import React, { useState, useEffect } from "react";
 
 export const LikeButton = ({props, handleLikeButtonClickFunc}) => { 
     return(
-        <>
-            <button className="likebutton" onClick={handleLikeButtonClickFunc(props.id)}>Like this message!
+        <div className="like-info">
+            <button className="likebutton" onClick={handleLikeButtonClickFunc(props.id)}>❤️
             </button>
-        </>
+        </div>
     )
 }
