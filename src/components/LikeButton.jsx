@@ -6,9 +6,10 @@ import "../styles/LikeButton.css";
 export const LikeButton = ({props, handleLikeButtonClickFunc}) => { 
     return(
         <div className="like-container">
-            <button className="likebutton" onClick={() => {handleLikeButtonClickFunc(props._id)}}>
-                Like this message!
-            </button>
+            <div className="like-info">
+                <button className="likebutton" onClick={handleLikeButtonClickFunc(props._id)}>❤️
+                </button>
+            </div>
             <p>{props.hearts}</p>
         </div>
     )
