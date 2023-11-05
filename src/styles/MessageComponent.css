@@ -20,13 +20,6 @@
     align-items: center;
     padding: 5px;
 }
-button {
-    background-color: #feb7d2;
-    border: none;
-    border-radius: 50%;
-    padding: 15px;
-    cursor: pointer;
-}
 .like-info {
     display: inline-block;
     color: black;
@@ -36,6 +29,7 @@ button {
 }
 .time-info {
      color: grey;
+     overflow: auto;
 }
     
 

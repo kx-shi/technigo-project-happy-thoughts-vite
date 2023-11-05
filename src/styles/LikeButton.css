@@ -1,0 +1,26 @@
+
+.info-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+.likebutton {
+    background-color: #feb7d2;
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+}
+.like-info {
+    display: inline-block;
+    color: black;
+}
+.numberoflikes {
+    margin-left: 5px;
+}
+.time-info {
+     color: grey;
+     overflow: auto;
+}
+  
