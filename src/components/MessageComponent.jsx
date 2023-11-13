@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/MessageComponent.css";
 import { LikeButton } from "./LikeButton";
+import moment from "moment";
 
 export const MessageComponent = ({props, handleLikeButtonClick}) => {
     return(
@@ -13,7 +14,7 @@ export const MessageComponent = ({props, handleLikeButtonClick}) => {
                     <span className="numberoflikes">x{props.hearts}</span>
                 </div>
                 <div className="time-info">
-                    <p>{props.createdAt}</p>
+                    <p>{moment(props.createdAt).fromNow()}</p>
                 </div>
             </div>
         </div>
